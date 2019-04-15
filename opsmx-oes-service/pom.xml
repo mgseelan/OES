@@ -6,7 +6,7 @@
 	<artifactId>ServiceProvider</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>OpsMx-OES Maven Webapp</name>
+	<name>OpsMx-OES-Service Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -54,7 +54,7 @@
 
 	</dependencies>
 	<build>
-		<finalName>OpsMx-oes</finalName>
+		<finalName>opsmx-oes-service</finalName>
 		<plugins>
 			<plugin>
 				<!-- Build an executable JAR -->
