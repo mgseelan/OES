@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="app" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="app" class="no-js"> <!--<![endif]-->
+<head>
+  <title>Service Provider</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="./css/dashboard.less"> -->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
+  <link rel="stylesheet/less" type="text/css" href="./less/style.less" />	
+  <script src="./libraries/less/less.min.js"></script> 
+  <a href="https://icons8.com/icon/12226/high-priority"></a>
+  <!-- FAVICON  -->
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body ng-app="app"  ng-controller="setupController">
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand">
+      	<img class="img-responsive" alt="OES" src="./images/opsmx-logo.png" style="width:90px;">
+      </a>
+    </div> 
+    <ul class="nav navbar-nav pull-right">
+      <li><a href="#/">Setup</a></li>      
+      <li><a href="#/dashboard">Dashboard</a></li>
+    </ul>
+    <!-- <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul> -->
+  </div>
+</nav>
+<div ng-view></div>
+ <script src="./libraries/jquery.js"></script>
+ <script src="./libraries/bootstrap.min.js"></script>
+<script src="./libraries/angular.js"></script>
+<script src="./libraries/angular-resource.js"></script>
+<script src="./libraries/angular-route.js"></script>
+<script src="./libraries/js-yaml.min.js"></script>
+<script src="./js/app.js"></script>
+<script src="./js/config.js"></script>
+<script src="./services/provider-service.js"></script>
+<script src="./services/dashboardService.js"></script>
+<script src="./js/controller.js"></script>
+</body>
+</html>

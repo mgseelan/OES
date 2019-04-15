@@ -1,0 +1,370 @@
+<div class="container">
+<section class="content" >
+	<div class="opsmx-loader" ng-show="opsmxLoader" style="margin-top: 100px;">
+		<div class="opsmx-loader-circle" ></div>
+		<!-- <span class="opsmx-loader-text" >processing</span> -->
+	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-hide="showDeployConfig" style="box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);background: white;font-family: 'Quicksand', sans-serif;min-height:420px;">
+	    <h4 class="dash-head-h4 mt20">Spinnaker Configuration</h4>
+	    <div class="col-md-12 col-sm-12 col-xs-12 mt20 mb20 padding0">
+	    	<form ng-submit="getAllSpinnakerInstances()">	    		
+	    		<div class="col-md-4 col-sm-4 col-xs-4 padding0">	    			    			 
+	    			<input required="required" ng-model="nameSpace" class="form-control" placeholder="Name Space" type="text">
+	    		</div>
+	    		<div class="col-md-4 col-sm-4 col-xs-4 ">
+	    			<button class="btn common-btn" type="submit">GO</button>
+	    		</div>	    		
+	    	</form>
+	    </div>
+	    <table style="width:100%;" >
+	    	<tbody>
+	    		<tr ng-repeat="(key,value) in spinnakerInstances" class="spinnaker-main-box-li" ng-class="{'spin-green-box':value.healthStatus=='Healthy','spin-red-box':value.healthStatus=='UnHealthy'}" ng-model="spinnakerCollapsed[key]" >
+	    			<td colspan="12" style="padding: 10px 20px;">
+	    				<ul style="list-style:none";>
+	    					<li>
+	    						<div ng-click="getSpinnakerDetails(key)" style="pointer:cursor;">{{key}}</div>
+	    			 			<div style="font-size: 12px;">
+	    			 				Health Status : 
+	    			 				<span ng-class="{'success-text':value.healthStatus=='Healthy','error-text':value.healthStatus=='Unhealthy'}" ><strong>{{value.healthStatus}}</strong></span>
+	    			 				<span class="each-log-icon" ng-show="value.healthStatus=='Unhealthy'" ng-click="getHealthStatusLogs()" data-toggle="modal" data-target="#serviceLogsModal">Log</span>
+									<div class="pull-right">Version : {{value.version}} </div>
+								</div>
+								<!-- <span ng-click="hideDetail()">show</span> -->
+	    					</li>
+	    					 <li ng-show="spinnakerInstances[key].show">
+	    						<span ng-click="hideDetail()">Hide</span>
+	    						
+		    					<table class="table" >
+								    <thead>
+								      	<tr>
+									        <th>ServiceName</th>
+									        <th>Version</th> 
+									        <th>Instances</th>
+									        <th>Status</th>       
+								      	</tr>
+								    </thead>
+								    <tbody>				    	
+								      	<tr ng-repeat="item in spinnakerDetails">
+									        <td>{{item.service || 'NA'}}</td>
+									        <td>{{item.version || 'NA'}}</td>
+									        <td>{{item.instances || 'NA'}}</td>
+									        <td ng-class="{'success-text':item.status=='Running','error-text':item.status=='Stop','warning-text':item.status=='CrashLoopBackOff'}">
+									        	<strong>{{item.status || 'NA'}}</strong>
+									        	<span class="each-log-icon" ng-show="item.status != 'Running'" ng-click="getServiceLogs(item.service)" data-toggle="modal" data-target="#serviceLogsModal">Log</span>
+									        </td>
+									    </tr>
+								   </tbody>	    
+							   </table>
+							   <div style="text-align:center;">
+							   		<!-- <button ng-click="editSpinnakerInstance()" class="con-outline-button">Edit</button> -->
+							   		<!-- <button ng-click="upgradeSpinnakerInstance(value.version)" data-toggle="modal" data-target="#upgradeModal" class="con-outline-button">Upgrade</button> -->
+							   </div>							   
+	    				</li>
+	    			</ul>	    			
+	    			</td>
+	    			
+	    		</tr>
+	    		
+	    	</tbody>
+	    </table>
+		<!-- <ul style="list-style:none;" class="mt20">
+			<li ng-repeat="(key,value) in spinnakerConfig" class="spinnaker-main-box-li" ng-class="{'spin-green-box':value.healthStatus=='good','spin-red-box':value.healthStatus=='bad'}" >
+				{{key}} 
+				<div style="font-size: 12px;">Health Status : <span ng-class="{'success-text':value.healthStatus=='good','error-text':value.healthStatus=='bad'}" >{{value.healthStatus}}</span>
+					<div class="pull-right">Version : {{value.version}} </div>
+				</div> 
+			<li>
+			<li ng-repeat="(key,value) in spinnakerConfig">
+				<table class="table">
+				    <thead>
+				      	<tr>
+					        <th>Read</th>
+					        <th>Services</th> 
+					        <th>Current version</th>
+					        <th>Name</th>       
+				      	</tr>
+				    </thead>
+				    <tbody>
+				      	<tr ng-repeat="item in value.details">
+					        <td>{{item.read}}</td>
+					        <td>{{item.service}}</td>
+					        <td>{{item.version}}</td>
+					        <td>{{item.name}}</td>
+					    </tr>
+				   </tbody>	    
+			   </table>	  
+			</li>
+		</ul>
+		  -->
+	</div>
+	
+	
+	<div ng-show="showDeployConfig">
+		<div style="padding:10px;">
+			<h4 class="dash-head-h4 pull-left mt20">Edit Configuration</h4>
+			<div ng-click="showDeployConfig=!showDeployConfig" class="pull-right mt20" style="cursor:pointer;">Back</div>
+		</div>
+			
+	    <table class="table mt40">
+	    <thead>
+	      	<tr>
+		        <th>Providers</th>
+		        <th>Enabled</th> 
+		        <th>Accounts</th>
+		        <th>Action</th>       
+	      	</tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="(key,value) in configurations.deploymentConfigurations[0].providers">
+	        <td>{{key}}</td>
+	        <td>
+	        	<span ng-show="value.enabled" class="green-bg-border">Yes</span>
+	        	<span ng-hide="value.enabled" class="red-bg-border">No</span>
+	        </td> 
+	        <td>
+	        	<span class="add-account">Add {{key}} account</span>        
+		        <table class="table">	            
+		        	<tr ng-repeat="account in value.accounts">
+		        		<td ng-show="account.name!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Name:</strong></li>
+		        				<li>{{account.name}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.username!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>UserName:</strong></li>
+		        				<li>{{account.username}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.password!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Password:</strong></li>
+		        				<li><input type="password" value="account.password"></li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.providerVersion!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>ProviderVersion:</strong></li>
+		        				<li>{{account.providerVersion}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.kubeconfigFile!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>kubeconfigFile:</strong></li>
+		        				<li>{{account.kubeconfigFile}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.endpoint!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>End point:</strong></li>
+		        				<li>{{account.endpoint}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.namespaces!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Name Spaces:</strong></li>
+		        				<li ng-repeat="item in account.namespaces">{{item}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.dockerRegistries!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Docker Registries:</strong></li>
+		        				<li ng-repeat="item in account.dockerRegistries">{{item.accountName}}</li>
+		        			</ul>
+		        		</td>
+		        	<tr>	        		
+		        </table>        	
+	        </td>
+	        <td>
+	        	<div class="con-td">														
+					<a ng-click="editDeploymentDetail(key,value)" href="" style="color:#273742;font-weight:bold;margin-right: 10px;" data-toggle="modal" data-target="#myModal">EDIT</a>
+					<!-- <a ng-click="" href="" style="color:#273742;font-weight:bold;">APPLY</a> -->
+				</div>
+	        </td>       
+	      </tr>
+	      <tr ng-repeat="(key,value) in configurations.deploymentConfigurations[0].artifacts">
+	        <td>{{key}}</td>
+	        <td>
+	        	<span ng-show="value.enabled" class="green-bg-border">Yes</span>
+	        	<span ng-hide="value.enabled" class="red-bg-border">No</span>
+	        </td> 
+	        <td>  
+	        	<span class="add-account">Add {{key}} account</span>      
+		        <table class="table">
+		        	<tr ng-repeat="account in value.accounts">
+		        		<td ng-show="account.name!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Name:</strong></li>
+		        				<li>{{account.name}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.username!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>UserName:</strong></li>
+		        				<li>{{account.username}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.password!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Password:</strong></li>
+		        				<li><input type="password" value="account.password" ></li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.providerVersion!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>ProviderVersion:</strong></li>
+		        				<li>{{account.providerVersion}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.kubeconfigFile!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>kubeconfigFile:</strong></li>
+		        				<li>{{account.kubeconfigFile}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.endpoint!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>End point:</strong></li>
+		        				<li>{{account.endpoint}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.namespaces!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Name Spaces:</strong></li>
+		        				<li ng-repeat="item in account.namespaces">{{item}}</li>
+		        			</ul>
+		        		</td>
+		        		<td ng-show="account.dockerRegistries!=undefined">
+		        			<ul style="list-style: none;padding: 0px;">
+		        				<li><strong>Docker Registries:</strong></li>
+		        				<li ng-repeat="item in account.dockerRegistries">{{item.accountName}}</li>
+		        			</ul>
+		        		</td><tr>
+		        </table>        	
+	        </td> 
+	        <td>
+	        	<div class="con-td">														
+					<a ng-click="editDeploymentDetail(key,value)" href="" style="color:#273742;font-weight:bold;margin-right: 10px;" data-toggle="modal" data-target="#myModal">EDIT</a>
+					<!-- <a ng-click="" href="" style="color:#273742;font-weight:bold;">APPLY</a> -->
+				</div>
+	        </td>      
+	      </tr>      
+	    </tbody>
+	  </table>
+  </div>
+  
+  <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="width: 1000px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Configuration for {{selectedDeplKey}}</h4>
+      </div>
+      <div class="modal-body">
+       		<span>Enabled </span>
+       		<input type="text" ng-model="selectedDeplValue.enabled">
+       		<div style="padding: 10px 0px;">Accounts <span class="add-account" ng-click="addAccount(selectedDeplKey)">Add account</span></div>
+       		<table class="table">
+	        	<tr ng-repeat="account in selectedDeplValue.accounts">
+	        		<td ng-show="account.name!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>Name:</strong></li>
+	        				<li><input type="text" ng-model="account.name"></li>
+	        			</ul>
+	        		</td>
+	        		<td ng-show="account.username!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>UserName:</strong></li>
+	        				<li><input type="text" ng-model="account.username"></li>
+	        			</ul>
+	        		</td>
+	        		<td ng-show="account.password!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>Password:</strong></li>
+	        				<li><input type="password" value="account.password"></li>
+	        			</ul>
+	        		</td>
+	        		<td ng-show="account.providerVersion!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>ProviderVersion:</strong></li>
+	        				<li><input type="text" ng-model="account.providerVersion"></li>
+	        			</ul>
+	        		</td>
+	        		<td ng-show="account.kubeconfigFile!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>kubeconfigFile:</strong></li>
+	        				<li><input type="text" ng-model="account.kubeconfigFile"></li>
+	        			</ul>
+	        		</td>
+	        		<td ng-show="account.endpoint!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>End point:</strong></li>
+	        				<li><input type="text" ng-model="account.endpoint"></li>
+	        			</ul>
+	        		</td>
+	        		<td ng-show="account.namespaces!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>Name Spaces:</strong></li>
+	        				<li><input type="text" ng-model="account.namespaces"></li>
+	        			</ul>
+	        		</td>
+	        		<td ng-show="account.dockerRegistries!=undefined">
+	        			<ul style="list-style: none;padding: 0px;">
+	        				<li><strong>Docker Registries:</strong></li>
+	        				<li><input type="text" ng-model="account.dockerRegistries"></li>
+	        			</ul>
+	        		</td><tr>
+	        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn common-button" ng-click="saveEditData(selectedDeplKey,selectedDeplValue.accounts)" >Apply</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+ <div class="modal fade" id="upgradeModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Upgrade</h4>
+        </div>
+        <div class="modal-body">
+          <p>Do you want to upgrade the current spinnaker version {{upgradeVersion}}</p>
+        </div>
+        <div class="modal-footer">
+           	<button type="button" class="btn common-button btn-default" id="modal-btn-si" data-dismiss="modal">Yes</button>
+        	<button type="button" class="btn btn-default" id="modal-btn-no" data-dismiss="modal">Cancel</button>          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+   <div class="modal fade" id="serviceLogsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Logs</h4>
+        </div>
+        <div class="modal-body">
+          <p>{{serviceLogs}}</p>
+        </div>
+        <div class="modal-footer">
+           	<!-- <button type="button" class="btn common-button btn-default" id="modal-btn-si" data-dismiss="modal">Yes</button> -->
+        	<button type="button" class="btn btn-default" id="modal-btn-no" data-dismiss="modal">Cancel</button>          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+</div>

@@ -1,0 +1,191 @@
+<div class="container">
+   <div class="opsmx-loader" ng-show="opsmxLoader" style="margin-top: 100px;">
+		<div class="opsmx-loader-circle" ></div>
+		<!-- <span class="opsmx-loader-text" >processing</span> -->
+	</div>	
+	<div style="position:absolute;height:100%;">
+		<div class="col-md-3 col-sm-3 col-xs-3" style="height:550px;background-color:#67C7B2;width:24%;">			
+		</div>
+		<div class="col-md-9 col-sm-9 col-xs-9" style="height:550px;border-right:50px solid #67C7B2;">		
+		</div>
+		<div class="col-md-12 col-sm-12 col-xs-12" style="height:550px;position:relative;bottom:550px;padding-top: 50px;">
+			<div class="col-md-3 col-sm-3 col-xs-3 padding0" >
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:20px 0px;">
+					<span class="vertical-step-head" ng-class="{'vertical-step-head-active':isShowStep1}">Check your prerequisites</span>
+					<span class="vertical-step-bubble" ng-class="{'vertical-step-bubble-active':isShowStep1,'vertical-step-bubble-success':isStep1Success}">1</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:20px 0px;">
+					<span class="vertical-step-head" ng-class="{'vertical-step-head-active':isShowStep2}">Select Platform/Namespace/Version</span>
+					<span class="vertical-step-bubble" ng-class="{'vertical-step-bubble-active':isShowStep2,'vertical-step-bubble-success':isStep2Success}">2</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:20px 0px;">
+					<span class="vertical-step-head" ng-class="{'vertical-step-head-active':isShowStep3}">Setup Minio</span>
+					<span class="vertical-step-bubble" ng-class="{'vertical-step-bubble-active':isShowStep3,'vertical-step-bubble-success':isStep3Success}">3</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:20px 0px;">
+					<span class="vertical-step-head" ng-class="{'vertical-step-head-active':isShowStep4}">Setup Configurations and enviornment</span>
+					<span class="vertical-step-bubble" ng-class="{'vertical-step-bubble-active':isShowStep4,'vertical-step-bubble-success':isStep4Success}">4</span>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:20px 0px;">
+					<span class="vertical-step-head" ng-class="{'vertical-step-head-active':isShowStep5}">Install Spinnaker</span>
+					<span class="vertical-step-bubble" ng-class="{'vertical-step-bubble-active':isShowStep5,'vertical-step-bubble-success':isStep5Success}">5</span>
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-9 col-xs-9">
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:30px 50px 10px 0px;" ng-show="isShowStep1">
+					<div class="vertical-eachstep-head">Do you have</div> 
+					<p class="vertical-step-description">We need Curl, Python, OC, and KubeCtl to continue. You can check here for the dependencies.</p>
+					<ul class="vertical-li mt40">
+						<li><div>Curl </div><div class="dependency-desc">A tool to transfer data from or to server</div> </li>
+						<li><div>Python </div><div class="dependency-desc">An object-oriented, high-level programming language with dynamic semantics</div></li>
+						<li><div>OC </div><div class="dependency-desc"> OpenShift CLI is used for managing OpenShift applications from the command line</div></li>
+						<li><div>Kubectl</div><div class="dependency-desc"> Kubernetes command-line tool to deploy and manage applications on Kubernetes</div> </li>
+					</ul>					
+					<div style="float:right;">
+						<button type="button" class="btn common-btn"  ng-click="dependencyCheck()">Check Here</button>
+						<button class="btn common-btn" ng-click="goToStep2()" ng-disabled="isDisabled" >Next</button>
+					</div>					
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:30px 50px 10px 0px;" ng-show="isShowStep2">
+					<!-- <div class="vertical-eachstep-head">Platform/Namespace/Version</div>  -->
+					<div class="col-md-12 col-sm-12 col-xs-12 padding0">
+						<div class="col-md-12 col-sm-12 col-xs-12 padding0">
+							<div class="col-md-3 col-sm-3 col-xs-3 p2">
+								<div class="vertical-step-inner" ng-class="{'vertical-step-inner-active':isShowPlatformStep}">Platform</div>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3 p2">
+								<div class="vertical-step-inner" ng-class="{'vertical-step-inner-active':isShowNamespaceStep}">Namespace</div>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3 p2">
+								<div class="vertical-step-inner" ng-class="{'vertical-step-inner-active':isShowVersionStep}">Version</div>
+							</div>
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12 padding0">
+							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowPlatformStep">
+								<div class="vertical-eachstep-head mt20">Select platform to deploy spinnaker</div>
+								<p class="vertical-step-description">Some Description go here. some description go here. some description go here</p>
+								<div class="col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 mt20">
+									<!-- <div ng-repeat="i in platForms" class="icon-text-box">									
+										<span class="checkmark"></span>
+										<img style="width:20px" ng-src="{{i.imagePath}}">
+										{{i.option}}
+									</div> -->
+									<label class="con-radio-inline con-template-radio-box" data-toggle="tooltip" title="Openshift" ng-class="{'con-template-radio-box-selected':platform=='openshift'}"> 
+										<input type="radio" value="openshift" id="openshift" ng-model="platform" ng-click="checkOpenshiftPlatform()" class="con-template-radio-input" >
+										<img src="/images/Openshift.png" class="con-template-radio-img"></img>
+									</label> 	
+									<label class="con-radio-inline con-template-radio-box radio-box-disabled" data-toggle="tooltip" title="Kubernetes" ng-class="{'con-template-radio-box-selected':platform=='kubernetes'}"> 
+										<input type="radio" value="kubernetes" id="kubernetes" ng-model="platform" ng-disabled="true" ng-click="checkKubernetesPlatform()" class="con-template-radio-input"> 
+										<img src="/images/Kubernetes.png" class="con-template-radio-img"></img>
+									</label>
+																
+								</div>
+								<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
+									<button class="btn common-btn" ng-click="goToNamespaceStep()" ng-disabled="!isplatformCheckSuccess">Next</button>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowNamespaceStep">
+								<div class="vertical-eachstep-head mt20">Enter namespace to deploy spinnaker services</div>
+								<p class="vertical-step-description">Namespace where you want to deploy spinnaker services</p>
+								<input maxlength="200" required="required" ng-model="nameSpace" class="form-control mt20 col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" style="width:40%;" placeholder="Namespace" ng-readonly="isNameSpaceEdit" type="text">
+								<button class="btn common-btn mt20" ng-click="checkNamespace()" ng-hide="isNameSpaceEdit">GO</button>
+								<button class="btn common-btn mt20" ng-click="editNameSpace()" ng-show="isNameSpaceEdit">EDIT</button>
+								<div class="col-md-12 col-sm-12 col-xs-12" style="color:#EC7171;">{{nameSpaceExistErrorMessage}}</div>
+								<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div" ng-show="isNamespaceCheckSuccess">
+									<button class="btn common-btn" ng-click="goToVersionStep()">Next</button>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowVersionStep">
+								<div class="vertical-eachstep-head mt20">Select spinnaker version</div>
+								<p class="vertical-step-description">Some Description go here. some description go here. some description go here</p>
+								<select class="form-control mt20 col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" style="width:40%;" 
+									ng-options="p.option as p.option for p in spinnakerVersions" ng-model="spinnakerVersion" required="required" >
+									<option ng-disabled="true" value="">Version</option>
+								</select>
+								<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
+									<button class="btn common-btn" ng-click="goToStep3()">Next</button>
+								</div>
+							</div>							
+						</div>
+					</div>					
+					
+				</div>					
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:30px 50px 10px 0px;" ng-show="isShowStep3">
+					<div class="vertical-eachstep-head">Minio Details</div>	
+					<p class="vertical-step-description">Some description go here Some description go here Some description go here Some description go here Some description go here Some description go here Some description go here Some description go here </p>
+					<div class="col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 mt20">
+						<div class="form-group ">
+				            <label class="control-label" style="color: #757272;">Access Key ID </label>
+				            <input maxlength="200" required="required" ng-model="accessKey" class="form-control" style="width:40%;" placeholder="Access Key ID" type="text">
+				        </div>
+				        <div class="form-group">
+				            <label class="control-label" style="color: #757272;">Secret Access Key  </label>
+				            <input maxlength="200" required="required" ng-model="secretAccessKey" style="width:40%;" class="form-control" placeholder="Secret Access Key" type="text">
+				        </div>
+				        <div class="form-group">
+				            <label class="control-label" style="color: #757272;">Size </label>
+				            <input maxlength="3" required="required" class="form-control" style="width:40%;" ng-model="size" placeholder="Size" type="text">
+				        </div>	
+			        </div>			
+					<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
+						<button class="btn common-btn" ng-click="goToStep4()">Next</button>
+					</div>						
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:30px 50px 10px 0px;" ng-show="isShowStep4">
+					<!-- <div class="vertical-eachstep-head">Account Configuration</div>	 -->
+					<div class="col-md-12 col-sm-12 col-xs-12 padding0">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="col-md-3 col-sm-3 col-xs-3 p2">
+								<div class="vertical-step-inner" ng-class="{'vertical-step-inner-active':isShowKubeStep}">KubeCtl</div>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3 p2">
+								<div class="vertical-step-inner" ng-class="{'vertical-step-inner-active':isShowDockerStep}">Docker</div>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-3 p2">
+								<div class="vertical-step-inner" ng-class="{'vertical-step-inner-active':isShowAccountNameStep}">AccountName</div>
+							</div>
+						</div>
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowKubeStep">
+								<div class="vertical-eachstep-head">Enter path of Kube config file</div>
+								<input maxlength="200" required="required" ng-model="path" class="form-control mt20" style="width:30%;" placeholder="/home/" type="text">
+								<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
+									<button class="btn common-btn" ng-click="goToDockerStep()">Next</button>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowDockerStep">
+								<div class="vertical-eachstep-head">Enter Docker registry/username</div>
+								<input maxlength="200" required="required" ng-model="dockerRegistryUsername" class="form-control mt20" style="width:30%;" placeholder="docker.io/config" type="text">
+								<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
+									<button class="btn common-btn" ng-click="goToAccountNameStep()">Next</button>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowAccountNameStep">
+								<div class="vertical-eachstep-head">Enter Spinnaker V2 Account Name</div>
+								<input maxlength="200" required="required" ng-model="spinnakerV2Account" class="form-control mt20" style="width:30%;" placeholder="Account Name" type="text">
+								<div  class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
+									<button class="btn common-btn" ng-click="goToStep5()">Next</button>
+								</div>
+							</div>							
+						</div>
+					</div>				
+											
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:30px 50px 10px 0px;" ng-show="isShowStep5">
+					<div class="vertical-eachstep-head">Install Spinnaker</div>					
+					<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div mt40" style="text-align:center;" ng-hide="deploySpinnakerSuccess">
+						<button class="btn common-btn" ng-click="deploySpinnaker()">Install</button>
+					</div>
+					<div class="col-md-12 col-sm-12 col-xs-12 mt40" ng-show="deploySpinnakerSuccess" style="color:#67C7B2;">
+			             <span>Successfully installed spinnaker. Click to launch <a ng-href={{spinnakerurl}} target="_blank">{{spinnakerurl}}</a></span>
+					</div>						
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:10px 50px 10px 0px;min-height:60px;color:#EC7171;" ng-show="deploymentErrorMessage != ''">
+					<img src="https://img.icons8.com/office/26/000000/high-priority.png">
+					<span>{{deploymentErrorMessage}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

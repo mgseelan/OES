@@ -1,0 +1,48 @@
+// Mixins used
+
+.transition-all() {
+    -webkit-transition: all 0.35s;
+    -moz-transition: all 0.35s;
+    transition: all 0.35s;
+}
+
+.clear(){
+		content: '';
+		display: block;
+		clear: both;
+}
+
+.width(@widthTotal: @widthInPercent, @widthMinus: @widthInPixel){
+    width: -webkit-calc(~'@{widthTotal} - @{widthMinus}');
+    width: -moz-calc(~'@{widthTotal} - @{widthMinus}');
+    width: -o-calc(~'@{widthTotal} - @{widthMinus}');
+    width: -webkit-calc(~'@{widthTotal} - @{widthMinus}');
+    width: calc(~'@{widthTotal} - @{widthMinus}');
+}
+
+.height(@heightTotal: @heightInPercent, @heightMinus: @heightInPixel){
+    height: -webkit-calc(~'@{heightTotal} - @{heightMinus}');
+    height: -moz-calc(~'@{heightTotal} - @{heightMinus}');
+    height: -o-calc(~'@{heightTotal} - @{heightMinus}');
+    height: -webkit-calc(~'@{heightTotal} - @{heightMinus}');
+    height: calc(~'@{heightTotal} - @{heightMinus}');
+}
+
+
+// .border-gradient(@size){
+//     border-top: @size solid @theme-secondary;
+//     border-bottom: @size solid @theme-primary;
+//     -webkit-box-sizing: border-box;
+//     -moz-box-sizing: border-box;
+//     box-sizing: border-box;
+//     background-position: 0 0, 100% 0;
+//     background-repeat: no-repeat;
+//     -webkit-background-size: @size 100%;
+//     -moz-background-size: @size 100%;
+//     background-size: @size 100%;
+//     background-image: -webkit-linear-gradient(top, @theme-secondary 0%, @theme-primary 100%), -webkit-linear-gradient(top, @theme-secondary 0%, @theme-primary 100%);
+//     background-image: -moz-linear-gradient(top, @theme-secondary 0%, @theme-primary 100%), -moz-linear-gradient(top, @theme-secondary 0%, @theme-primary 100%);
+//     background-image: -o-linear-gradient(top, @theme-secondary 0%, @theme-primary 100%), -o-linear-gradient(top, @theme-secondary 0%, @theme-primary 100%);
+//     background-image: linear-gradient(to bottom, @theme-secondary 0%, @theme-primary 100%), linear-gradient(to bottom, @theme-secondary 0%, @theme-primary 100%);
+// }
+

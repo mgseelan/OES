@@ -1,0 +1,222 @@
+.menu-list{
+    padding-left: 30px;
+    padding-top: 20px;
+}
+.home-section{
+    float:left;
+    width: 10%;
+}
+.section{
+    margin-left: 10%;
+    float:left;
+}
+.photo{
+    padding-right: 5px;
+}
+body {
+    font-family:'Quicksand', sans-serif;  
+}
+.stepwizard-step p {
+    margin-top: 10px;
+}
+.stepwizard-row {
+    display: table-row;
+}
+.stepwizard {
+    display: table;
+    width: 100%;
+    position: relative;
+}
+.stepwizard-step button[disabled] {
+    opacity: 1 !important;
+    filter: alpha(opacity=100) !important;
+}
+.stepwizard-row:before {
+    top: 14px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    z-order: 0;
+}
+.stepwizard-step {
+    display: table-cell;
+    text-align: center;
+    position: relative;
+}
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.start-section{
+	width: 100%;
+    height: 480px;
+    padding-top:150px;
+    margin-top:20px;
+    display: block;
+    font-family:'Quicksand', sans-serif;  
+    background: white;
+    text-align: center;    
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+}
+
+.common-btn{
+	background: #67C7B2;
+    color: white;
+}
+.mt50{
+	margin-top: 50px;
+}
+ 
+  @media (min-width: 992px) {
+  .container-scroll {
+  	.horizontal-table-top{
+    	overflow-x: auto;
+    	white-space: nowrap;
+    }
+  }
+  .container-scroll
+  {
+  	.horizontal-table-top {
+  		.horizontal-table-inner 
+   		{
+    		display: inline-block;
+    		float: none;    		
+    	    padding: 5px;
+  		}
+  	}
+  }
+}
+
+.container-scroll > .row {
+  margin-top: 24px;
+}
+.container-scroll > .row > .col-md-3 {
+  font-weight: bold;
+  text-align: center;
+}
+ 
+.green-bg-border{
+	background-color: #E1F4F0;
+    border-radius: 5px;
+    padding: 0px 5px;
+    border: 1px solid #67C7B2;
+}
+.red-bg-border{
+	background-color: #FBE3E3;
+    border-radius: 5px;
+    padding: 0px 5px;
+    border: 1px solid #EC7171;
+}
+
+ .con-td {
+            text-overflow: ellipsis;
+    		overflow: hidden;    		
+    		font-size: 11px;
+    		
+    		height : auto;
+    		font-family:'Quicksand', sans-serif;
+    		text-transform:uppercase;	    
+	    input,select{
+	    	border: 0px;
+    		width: 100%;
+    		height: auto;
+    		text-overflow: ellipsis;
+    		background-color:transparent;
+	  	}   
+    }
+    
+   .con-right{
+            margin-right:40px;
+     }
+.circle-sucess-button {
+	color: #fff;
+	background-color: #67c7b2;
+	border-color: #67c7b2;
+}
+
+.circle-sucess-button.focus, .circle-sucess-button:focus {
+	color: #fff;
+	background-color: #67c7b2;
+	border-color: #67c7b2;
+}
+
+.circle-sucess-button:hover {
+	color: #fff;
+	background-color: #67c7b2;
+	border-color: #67c7b2;
+}
+
+.circle-sucess-button.active, .circle-sucess-button:active, .open>.dropdown-toggle.circle-sucess-button
+	{
+	color: #fff;
+	background-color: #67c7b2;
+	border-color: #67c7b2;
+}
+
+.circle-sucess-button.active.focus, .circle-sucess-button.active:focus, .circle-sucess-button.active:hover,
+	.circle-sucess-button:active.focus, .circle-sucess-button:active:focus, .circle-sucess-button:active:hover,
+	.open>.dropdown-toggle.circle-sucess-button.focus, .open>.dropdown-toggle.circle-sucess-button:focus,
+	.open>.dropdown-toggle.circle-sucess-button:hover {
+	color: #fff;
+	background-color: #67c7b2;
+	border-color: #67c7b2;
+}
+
+.circle-sucess-button.active, .circle-sucess-button:active, .open>.dropdown-toggle.circle-sucess-button
+	{
+	background-image: none;
+}
+
+.circle-sucess-button.disabled.focus, .circle-sucess-button.disabled:focus, .circle-sucess-button.disabled:hover,
+	.circle-sucess-button[disabled].focus, .circle-sucess-button[disabled]:focus,
+	.circle-sucess-button[disabled]:hover, fieldset[disabled] .circle-sucess-button.focus,
+	fieldset[disabled] .circle-sucess-button:focus, fieldset[disabled] .circle-sucess-button:hover
+	{
+	background-color: #67c7b2;
+	border-color: #67c7b2;
+	color: #fff;
+}
+
+.circle-sucess-button .badge {
+	color: #fff;
+	background-color: #fff;
+}
+
+.add-account{
+	color: #67C7B2;
+	font-size: 12px;
+	cursor:pointer;
+}
+.add-account:hover{
+	font-weight: bold;
+}
+.mt20{
+	margin-top:20px;
+}
+.mb20{
+	margin-bottom:20px;
+}
+.padding0{
+	padding:0px;
+}
+.mt20{
+	margin-top:20px;
+}
+.mt40{
+	margin-top:40px;
+}
+.f12{
+	font-size:12px;
+}
+.p2{
+	padding:2px;
+}
+
