@@ -63,7 +63,7 @@
 						<div class="col-md-12 col-sm-12 col-xs-12 padding0">
 							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowPlatformStep">
 								<div class="vertical-eachstep-head mt20">Select platform to deploy spinnaker</div>
-								<p class="vertical-step-description">Some Description go here. some description go here. some description go here</p>
+								<p class="vertical-step-description">We deploy a distributed mode spinnaker on the selected containerized platform . Distributed installations are for development orgs with large resource footprints, and for those who can’t afford downtime during Spinnaker updates.</p>
 								<div class="col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 mt20">
 									<!-- <div ng-repeat="i in platForms" class="icon-text-box">									
 										<span class="checkmark"></span>
@@ -86,7 +86,7 @@
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowNamespaceStep">
 								<div class="vertical-eachstep-head mt20">Enter namespace to deploy spinnaker services</div>
-								<p class="vertical-step-description">Namespace where you want to deploy spinnaker services</p>
+								<p class="vertical-step-description">a DNS-1123 label must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character (e.g. 'my-name',  or '123-abc', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?')</p>
 								<input maxlength="200" required="required" ng-model="nameSpace" class="form-control mt20 col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" style="width:40%;" placeholder="Namespace" ng-readonly="isNameSpaceEdit" type="text">
 								<button class="btn common-btn mt20" ng-click="checkNamespace()" ng-hide="isNameSpaceEdit">GO</button>
 								<button class="btn common-btn mt20" ng-click="editNameSpace()" ng-show="isNameSpaceEdit">EDIT</button>
@@ -97,7 +97,7 @@
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowVersionStep">
 								<div class="vertical-eachstep-head mt20">Select spinnaker version</div>
-								<p class="vertical-step-description">Some Description go here. some description go here. some description go here</p>
+								<p class="vertical-step-description">Spinnaker version which you want to install</p>
 								<select class="form-control mt20 col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1" style="width:40%;" 
 									ng-options="p.option as p.option for p in spinnakerVersions" ng-model="spinnakerVersion" required="required" >
 									<option ng-disabled="true" value="">Version</option>
@@ -112,7 +112,9 @@
 				</div>					
 				<div class="col-md-12 col-sm-12 col-xs-12 padding0" style="padding:30px 50px 10px 0px;" ng-show="isShowStep3">
 					<div class="vertical-eachstep-head">Minio Details</div>	
-					<p class="vertical-step-description">Some description go here Some description go here Some description go here Some description go here Some description go here Some description go here Some description go here Some description go here </p>
+					<p class="vertical-step-description">Spinnaker requires an external storage provider for persisting your Application settings and configured Pipelines. 
+					Because these data are sensitive and can be costly to lose, so we will using a Minio Deployment which would be using a Persistence Volume Claim , 
+					Please ensure you have a Persistence Volume of 10 GiB available for the Minio PVC to attach</p>
 					<div class="col-md-11 col-sm-11 col-xs-11 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 mt20">
 						<div class="form-group ">
 				            <label class="control-label" style="color: #757272;">Access Key ID </label>
@@ -124,7 +126,7 @@
 				        </div>
 				        <div class="form-group">
 				            <label class="control-label" style="color: #757272;">Size </label>
-				            <input maxlength="3" required="required" class="form-control" style="width:40%;" ng-model="size" placeholder="Size" type="text">
+				            <input maxlength="3" required="required" class="form-control" style="width:40%;" ng-model="size" placeholder="10" type="text">
 				        </div>	
 			        </div>			
 					<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
@@ -148,6 +150,8 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowKubeStep">
 								<div class="vertical-eachstep-head">Enter path of Kube config file</div>
+								<p class="vertical-step-description">A file that is used to configure access to clusters is called a kubeconfig file. 
+								This is a generic way of referring to configuration files.</p>	
 								<input maxlength="200" required="required" ng-model="path" class="form-control mt20" style="width:30%;" placeholder="/home/" type="text">
 								<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
 									<button class="btn common-btn" ng-click="goToDockerStep()">Next</button>
@@ -155,6 +159,8 @@
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowDockerStep">
 								<div class="vertical-eachstep-head">Enter Docker registry/username</div>
+								<p class="vertical-step-description"> This is the location where your customized images would be pushed. 
+								container_repository_hub/username</p>
 								<input maxlength="200" required="required" ng-model="dockerRegistryUsername" class="form-control mt20" style="width:30%;" placeholder="docker.io/config" type="text">
 								<div class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
 									<button class="btn common-btn" ng-click="goToAccountNameStep()">Next</button>
@@ -162,6 +168,7 @@
 							</div>
 							<div class="col-md-12 col-sm-12 col-xs-12 mt20" ng-show="isShowAccountNameStep">
 								<div class="vertical-eachstep-head">Enter Spinnaker V2 Account Name</div>
+								<p class="vertical-step-description">Under the v2 account , Spinnaker use native Kubernetes APIs</p>
 								<input maxlength="200" required="required" ng-model="spinnakerV2Account" class="form-control mt20" style="width:30%;" placeholder="Account Name" type="text">
 								<div  class="col-md-12 col-sm-12 col-xs-12 verical-step-button-div">
 									<button class="btn common-btn" ng-click="goToStep5()">Next</button>

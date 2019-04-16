@@ -80,6 +80,11 @@ sed -i "s/MINIO_PASSWORD/$SPT_MINIO_SECRET_ACCESSKEY/" halconfigmap_template.yml
 
 sleep 2
 #m#printf '\n'
+pv_avail =$(oc get pv | grep Available | wc -l)
+if [ $pv_avail != 1 ] ; then
+	echo "{ \"status\" : \"failure\", \"message\" : \" There is Persistanr Volume Available for Minio.\" }"
+	exit 1; 
+fi
 
 
 oc create -n "$SPT_SPINNAKER_NAMESPACE" -f minio_template.yml > /dev/null 2>&1
